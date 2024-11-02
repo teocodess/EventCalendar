@@ -6,14 +6,36 @@
     <link href="./styles.css" rel="stylesheet">
     <title>Event Calender</title>
 </head>
-<body>
-   <nav id="navigation">
-    <!---->
-   </nav>
+<body class="flex items-center bg-blue-300 justify-center h-screen w-full">
+    <!--body - bg svg img + gradient var for light/dark more-->
+    
+    <div class="grid grid-cols-1 grid-rows-5 h-3/4 w-[80%]"> <!--mapping out the project skeleton-->
+    <nav id="navigation" class="bg-slate-200 row-span-1 flex items-center gap-5">
+    <button>Calendar View</button>
+    <button>Add Event</button>
+    <div class="justify-end">darkmode</div>
+    </nav>
 
-    <section id="calender_container" class="flex items-center bg-blue-300 justify-center h-screen w-full">
-
+    <section id="calender_container" class="bg-slate-300 row-span-4 flex flex-col items-center gap-5">
+        <div class="month-indicator">
+            <select id="month_dropdown"><option>November</option></select>
+            <select id="year_dropdown"><option>2024</option></select>
+            <!-- <p>Filter</p> -->
+        </div>
+        <div class="date-grid grid grid-cols-7 gap-5 w-full border-2 text-center border-white">
+          
+          <!--js populate days of the weeks + days within the columns-->
+            <!-- <div class="text-center">Mo</div>
+            <div>Tu</div>
+            <div>We</div>
+            <div>Th</div>
+            <div>Fr</div>
+            <div>Sa</div>
+            <div>Su</div> -->
+        </div>
     </section>
+    </div>
+
     <script src="./scripts.js"></script>
 </body>
 </html>
