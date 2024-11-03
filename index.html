@@ -18,11 +18,11 @@
 
     <section id="calender_container" class="bg-slate-300 row-span-4 flex flex-col items-center gap-5">
         <div class="month-indicator">
-            <select id="month_dropdown"><option>November</option></select>
-            <select id="year_dropdown"><option>2024</option></select>
+            <select id="month_dropdown"></select>
+            <select id="year_dropdown"></select>
             <!-- <p>Filter</p> -->
         </div>
-        <div class="date-grid grid grid-cols-7 gap-5 w-full border-2 text-center border-white">
+        <div id="date_display" class="grid grid-cols-7 gap-5 w-full border-2 text-center border-white">
           
           <!--js populate days of the weeks + days within the columns-->
             <!-- <div class="text-center">Mo</div>
