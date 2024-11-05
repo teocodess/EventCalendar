@@ -17,21 +17,24 @@
     </nav>
 <!--check if i can have the ids across pages-->
     <section id="event_container" class="bg-slate-300 row-span-4 flex flex-col justify-center items-center gap-5">
-        <form id="add_event" class="grid grid-cols-2 gap-5">
-            <div class="col-span-1 flex flex-col items-center justify-evenly">
-                <label>Status: </label><select> 
+        <form id="add_event" class="grid grid-cols-2 grid-rows-6 gap-5 w-3/4 h-full">
+            <div class="col-span-1 row-span-5 flex flex-col items-center justify-around bg-red-300 w-full">
+                <label>Status: </label><select class="w-3/4"> 
                 <option>scheduled</option>
                 <option>played</option>
                 <option>playing</option>
             </select>
-           <label>Date: </label><input placeholder="Enter event date" type="date">
-           <label>Time: </label><input placeholder="Enter event time" type="datetime">
+           <label>Date: </label><input placeholder="Enter event date" class="w-3/4" type="date">
+           <label>Time: </label><input placeholder="Enter event time" class="w-3/4" type="datetime">
         </div>
-           <div class="col-span-1 flex flex-col items-center justify-evenly">
-           <label>Teams: </label><input placeholder="Enter team #1" type="text"> : <input placeholder="Enter team#2" type="text">
-           <label>League: </label><input placeholder="Enter event league" type="text">
-           <label>Result: </label><input placeholder="Enter event result" type="number">
+           <div class="col-span-1 row-span-5 flex flex-col justify-around items-center bg-green-300 w-full">
+           <label>Teams: </label><input placeholder="Enter team #1" class="w-3/4" type="text"> : <input placeholder="Enter team#2" class="w-3/4" type="text">
+           <br><label>League: </label><input placeholder="Enter event league" class="w-3/4" type="text">
+           <label>Result: </label><input placeholder="Enter event result" class="w-3/4" type="number">
         </div>
+        <div class="col-span-2 row-span-1 flex flex-row items-center justify-center bg-red-300">
+        <button>ADD EVENT</button>
+    </div>
         </form>
 
           
