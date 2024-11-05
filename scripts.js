@@ -16,7 +16,33 @@ const loadData = async () => {
 
 loadData();
 
+function saveEvent() {
+    const event = {
+        status: document.getElementById('status').value,
+        date: document.getElementById('date').value,
+        time: document.getElementById('time').value,
+        team1: document.getElementById('team1').value,
+        team2: document.getElementById('team2').value,
+        league: document.getElementById('league').value,
+        result1: document.getElementById('result1').value,
+        result2: document.getElementById('result2').value,
+    };
 
+    localStorage.setItem('eventData', JSON.stringify(event));
+    window.location.href = './listEvent.html'
+}
+
+const eventData = JSON.parse(localStorage.getItem('eventData'));
+if (eventData) {
+    document.getElementById('statusDisplay').textContent = `Status: ${eventData.status}`;
+    document.getElementById('dateDisplay').textContent = `Date: ${eventData.date}`;
+    document.getElementById('timeDisplay').textContent = `Time: ${eventData.time}`;
+    document.getElementById('teamsDisplay').textContent = `Teams: ${eventData.team1} vs ${eventData.team2}`;
+    document.getElementById('leagueDisplay').textContent = `League: ${eventData.league}`;
+    document.getElementById('resultDisplay').textContent = `Result: ${eventData.result1} : ${eventData.result2}`;
+} else {
+
+}
 
 //write function with param to get the date based on a month 1-12 -> gets you the number of days if statement for february based on the year,
 //second param is year based on month - year populate the table with the corresponding dates 

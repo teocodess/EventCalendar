@@ -574,6 +574,10 @@ video {
   grid-row: span 5 / span 5;
 }
 
+.mb-5 {
+  margin-bottom: 1.25rem;
+}
+
 .flex {
   display: flex;
 }
@@ -760,6 +764,15 @@ video {
 
 .text-start {
   text-align: start;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.font-bold {
+  font-weight: 700;
 }
 
 .text-gray-400 {

@@ -19,22 +19,30 @@
     <section id="event_container" class="bg-slate-300 row-span-4 flex flex-col justify-center items-center gap-5">
         <form id="add_event" class="grid grid-cols-2 grid-rows-6 gap-5 w-3/4 h-full">
             <div class="col-span-1 row-span-5 flex flex-col items-center justify-around bg-red-300 w-full">
-                <label>Status: </label><select class="w-3/4"> 
+                <label>Status: </label>
+                <select id="status" class="w-3/4"> 
                 <option>scheduled</option>
                 <option>played</option>
                 <option>playing</option>
             </select>
-           <label>Date: </label><input placeholder="Enter event date" class="w-3/4" type="date">
-           <label>Time: </label><input placeholder="Enter event time" class="w-3/4" type="datetime">
+           <label>Date: </label>
+           <input id="date" placeholder="Enter event date" class="w-3/4" type="date">
+           <label>Time: </label>
+           <input id="time" placeholder="Enter event time" class="w-3/4" type="datetime">
         </div>
            <div class="col-span-1 row-span-5 flex flex-col justify-around items-center bg-green-300 w-full">
-           <label>Teams: </label><input placeholder="Enter team #1" class="w-3/4" type="text"> : <input placeholder="Enter team#2" class="w-3/4" type="text">
-           <br><label>League: </label><input placeholder="Enter event league" class="w-3/4" type="text">
-           <label>Result: </label><input placeholder="Enter event result" class="w-3/4" type="number">
+           <label>Teams: </label>
+           <input id="team1" placeholder="Enter team #1" class="w-3/4" type="text"> : 
+           <input id="team2" placeholder="Enter team#2" class="w-3/4" type="text">
+           <br><label>League: </label>
+           <input id="league" placeholder="Enter event league" class="w-3/4" type="text">
+           <label>Result: </label>
+           <input id="result1" placeholder="Enter event result" class="w-3/4" type="number"> : 
+           <input id="result2" placeholder="Enter event result" class="w-3/4" type="number">
         </div>
         <div class="col-span-2 row-span-1 flex flex-row items-center justify-center bg-red-300">
-        <button>ADD EVENT</button>
-    </div>
+        <button type="button" onclick="saveEvent()">ADD EVENT</button>
+        </div>
         </form>
 
           
