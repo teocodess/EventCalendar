@@ -11,34 +11,22 @@
     
     <div class="grid grid-cols-1 grid-rows-5 h-3/4 w-[80%]"> <!--mapping out the project skeleton-->
     <nav id="navigation" class="bg-slate-200 row-span-1 flex items-center gap-5">
-    <button>Calendar View
-        <a><img class="w-8 h-8" src="./assets/calendar.svg"></a>
-        <a><img class="w-8 h-8" src="./assets/listing.svg"></a>
-    </button>
-    <button>Add Event
-        <a><img class="w-8 h-8" src="./assets/plus.svg"></a>
-    </button>
+    <button>Calendar View</button>
+    <button>Add Event</button>
     <div class="justify-end">darkmode</div>
     </nav>
 
+    <!--add symbol eventlistener direct to this page same nav bar listing symbol active-->
     <section id="calender_container" class="border-2 row-span-4 flex flex-col items-center gap-5">
         <div class="month-indicator"> <!--put a listing symbol when clicked list of all events in the current month when new event added-->
             <select id="month_dropdown"></select>
             <select id="year_dropdown"></select>
             <!-- <p>Filter</p> -->
         </div>
-        <div id="date_display" class="grid grid-cols-7 gap-5 w-full border-2 text-center border-white">
-          
-            <div class="text-center">Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>Fri</div>
-            <div>Sat</div>
-            <div>Sun</div>
+        <div id="list_event" class="grid gap-5 w-full border-2 text-center border-white">
+          <!--only show the events not all days OR show all dates and an add button that takes you to the add event and has the date predefined?-->
+            
             <!--populate dates here-->
-            <!--STATUS - ABR TEAMS - RESULT IF OVER-->
-            <!--LISTING DATE, time, status, teams, league-->
         </div>
         <div id="legend">
             <ul class="inline-flex">

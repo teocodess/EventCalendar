@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./styles.css" rel="stylesheet">
+    <title>Add Event</title>
+</head>
+<body class="flex items-center bg-blue-300 justify-center h-screen w-full">
+    <!--body - bg svg img + gradient var for light/dark more-->
+    
+    <div class="grid grid-cols-1 grid-rows-5 h-3/4 w-[80%]"> <!--mapping out the project skeleton-->
+    <nav id="navigation" class="bg-slate-200 row-span-1 flex items-center gap-5">
+    <button>Calendar View</button>
+    <button class="bg-red-400">Add Event</button> <!--create a class called active that makes the button pop up in the nav bar-->
+    <div class="justify-end">darkmode</div>
+    </nav>
+<!--check if i can have the ids across pages-->
+    <section id="event_container" class="bg-slate-300 row-span-4 flex flex-col justify-center items-center gap-5">
+        <form id="add_event" class="grid grid-cols-2 gap-5">
+            <div class="col-span-1 flex flex-col items-center justify-evenly">
+                <label>Status: </label><select> 
+                <option>scheduled</option>
+                <option>played</option>
+                <option>playing</option>
+            </select>
+           <label>Date: </label><input placeholder="Enter event date" type="date">
+           <label>Time: </label><input placeholder="Enter event time" type="datetime">
+        </div>
+           <div class="col-span-1 flex flex-col items-center justify-evenly">
+           <label>Teams: </label><input placeholder="Enter team #1" type="text"> : <input placeholder="Enter team#2" type="text">
+           <label>League: </label><input placeholder="Enter event league" type="text">
+           <label>Result: </label><input placeholder="Enter event result" type="number">
+        </div>
+        </form>
+
+          
+        
+    </section>
+    </div>
+
+    <script src="./scripts.js"></script>
+</body>
+</html>
