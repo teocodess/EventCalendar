@@ -28,21 +28,27 @@ function saveEvent() {
         result2: document.getElementById('result2').value,
     };
 
-    localStorage.setItem('eventData', JSON.stringify(event));
-    window.location.href = './listEvent.html'
+    const events = JSON.parse(localStorage.getItem('events')) || [];
+    events.push(event);
+    
+    localStorage.setItem('events', JSON.stringify(events));
+    window.location.href = './index.html';
+
+    // localStorage.setItem('eventData', JSON.stringify(event));
+    // window.location.href = './listEvent.html'
 }
 
-const eventData = JSON.parse(localStorage.getItem('eventData'));
-if (eventData) {
-    document.getElementById('statusDisplay').textContent = `Status: ${eventData.status}`;
-    document.getElementById('dateDisplay').textContent = `Date: ${eventData.date}`;
-    document.getElementById('timeDisplay').textContent = `Time: ${eventData.time}`;
-    document.getElementById('teamsDisplay').textContent = `Teams: ${eventData.team1} vs ${eventData.team2}`;
-    document.getElementById('leagueDisplay').textContent = `League: ${eventData.league}`;
-    document.getElementById('resultDisplay').textContent = `Result: ${eventData.result1} : ${eventData.result2}`;
-} else {
+// const eventData = JSON.parse(localStorage.getItem('eventData'));
+// if (eventData) {
+//     document.getElementById('statusDisplay').textContent = `Status: ${eventData.status}`;
+//     document.getElementById('dateDisplay').textContent = `Date: ${eventData.date}`;
+//     document.getElementById('timeDisplay').textContent = `Time: ${eventData.time}`;
+//     document.getElementById('teamsDisplay').textContent = `Teams: ${eventData.team1} vs ${eventData.team2}`;
+//     document.getElementById('leagueDisplay').textContent = `League: ${eventData.league}`;
+//     document.getElementById('resultDisplay').textContent = `Result: ${eventData.result1} : ${eventData.result2}`;
+// } else {
 
-}
+// }
 
 //write function with param to get the date based on a month 1-12 -> gets you the number of days if statement for february based on the year,
 //second param is year based on month - year populate the table with the corresponding dates 
@@ -134,8 +140,8 @@ switch(month) {
 
     function populateCalendar(month, year){
         const dateDisplay = document.getElementById('date_display');
-
-        //clear existing dates for new month selection
+       const events = JSON.parse(localStorage.getItem('events')) || [];
+       
         dateDisplay.innerHTML = `
          <div class="text-center">Mon</div>
             <div>Tue</div>
@@ -166,6 +172,16 @@ switch(month) {
             const cell = document.createElement("div");
             cell.textContent = day;
             cell.classList.add("current-month");
+
+            const eventDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const eventForDate = events.find(event => event.date === eventDate);
+            if (eventForDate) {
+                const eventInfo = document.createElement("div");
+                eventInfo.classList.add("event-info");
+                eventInfo.textContent = `${eventForDate.team1} vs ${eventForDate.team2} - ${eventForDate.status}`;
+                cell.appendChild(eventInfo);
+            }     
+            
             dateDisplay.appendChild(cell);
         }
 
