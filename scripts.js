@@ -38,6 +38,45 @@ function saveEvent() {
     // window.location.href = './listEvent.html'
 }
 
+function loadEventsToList() {
+    const listEvent = document.getElementById('eventList');
+    listEvent.innerHTML = ''; // Clear any existing list content
+
+    // Retrieve events from localStorage
+    const events = JSON.parse(localStorage.getItem('events')) || [];
+
+    // Check if there are events to display
+    if (events.length === 0) {
+        const emptyMessage = document.createElement('p');
+        emptyMessage.textContent = 'No events available';
+        emptyMessage.classList.add('text-gray-500');
+        listEvent.appendChild(emptyMessage);
+        return;
+    }
+
+    // Iterate over each event and display its details
+    events.forEach(event => {
+        const listItem = document.createElement('li');
+        listItem.classList.add('p-4', 'border-b', 'border-gray-300');
+
+        listItem.innerHTML = `
+            <p><strong>Date:</strong> ${event.date}</p>
+            <p><strong>Time:</strong> ${event.time}</p>
+            <p><strong>Status:</strong> ${event.status}</p>
+            <p><strong>Teams:</strong> ${event.team1} vs ${event.team2}</p>
+            <p><strong>League:</strong> ${event.league}</p>
+            <p><strong>Result:</strong> ${event.result1} : ${event.result2}</p>
+        `;
+        listEvent.appendChild(listItem);
+    });
+}
+
+// Call loadEventsToList when the page loads in listEvent.html
+// if (window.location.pathname.includes('listEvent.html')) {
+//     window.onload = loadEventsToList;
+// }
+
+
 // const eventData = JSON.parse(localStorage.getItem('eventData'));
 // if (eventData) {
 //     document.getElementById('statusDisplay').textContent = `Status: ${eventData.status}`;
@@ -203,7 +242,15 @@ switch(month) {
     window.onload = () => {
         const currentMonth = new Date().getMonth() + 1;
         const currentYear = new Date().getFullYear();
-        monthDropdown.value = currentMonth;
-        yearDropdown.value = currentYear;
+        const dateDisplay = document.getElementById('date_display');
+        if (dateDisplay) {
+            const monthDropdown = document.getElementById('month_dropdown');
+            const yearDropdown = document.getElementById('year_dropdown');
+            monthDropdown.value = currentMonth;
+            yearDropdown.value = currentYear;
+              
         populateCalendar(currentMonth, currentYear);
+        } else if(window.location.pathname.includes('listEvent.html')) {
+            loadEventsToList();
+        }
     }
