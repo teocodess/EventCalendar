@@ -10,14 +10,21 @@
     <!--body - bg svg img + gradient var for light/dark more-->
     
     <div class="grid grid-cols-1 grid-rows-5 h-3/4 w-[80%]"> <!--mapping out the project skeleton-->
-    <nav id="navigation" class="bg-slate-200 row-span-1 flex items-center gap-5">
-    <button>Calendar View</button>
-    <button class="bg-red-400">Add Event</button> <!--create a class called active that makes the button pop up in the nav bar-->
-    <div class="justify-end">darkmode</div>
-    </nav>
+        <nav id="navigation" class="bg-slate-200 row-span-1 flex items-center gap-5">
+            <button class="bg-slate-700" onclick="window.location.href='./index.html'">Calendar View
+                <div class="flex flex-row">
+                <a href="./index.html"><img class="w-8 h-8" src="./assets/calendar.svg"></a>
+                <a href="./listEvent.html"><img class="w-8 h-8" src="./assets/listing.svg"></a>
+            </div>
+            </button>
+            <button onclick="window.location.href='./addEvent.html'">Add Event
+                <a href="./addEvent.html"><img class="w-8 h-8" src="./assets/plus.svg"></a>
+            </button>
+            <div class="justify-end">darkmode</div>
+            </nav>
 <!--check if i can have the ids across pages-->
     <section id="event_container" class="bg-slate-300 row-span-4 flex flex-col justify-center items-center gap-5">
-        <form id="add_event" class="grid grid-cols-2 grid-rows-6 gap-5 w-3/4 h-full">
+        <form class="grid grid-cols-2 grid-rows-6 gap-5 w-3/4 h-full">
             <div class="col-span-1 row-span-5 flex flex-col items-center justify-around bg-red-300 w-full">
                 <label>Status: </label>
                 <select id="status" class="w-3/4"> 
@@ -41,7 +48,7 @@
            <input id="result2" placeholder="Enter event result" class="w-3/4" type="number">
         </div>
         <div class="col-span-2 row-span-1 flex flex-row items-center justify-center bg-red-300">
-        <button type="button" onclick="saveEvent()">ADD EVENT</button>
+        <button type="submit" id="add_event" >ADD EVENT</button>
         </div>
         </form>
 

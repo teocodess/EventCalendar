@@ -1,22 +1,48 @@
+//-----------------------loading JSON file and merging with localStorage--------------------------
 const loadData = async () => {
     try {
         const response = await fetch('./data/sportData.json.json');
-        if(!response.ok){
+        if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const loadedData = await response.json();
-        const data = loadedData.data;
-        console.log(data)
-    }
+        const externalEvents = loadedData.data;
 
-    catch (error) {
-        console.log("Failed to fetch data: ", error)
+        // Retrieve existing events from localStorage and merge with new data
+        let events = JSON.parse(localStorage.getItem('events')) || [];
+        events = [...events, ...externalEvents.map(event => ({
+            status: event.status,
+            date: event.dateVenue,
+            time: event.timeVenueUTC,
+            team1: event.homeTeam?.name || "TBD",
+            team2: event.awayTeam.name,
+            league: event.originCompetitionName,
+            result1: event.result ? event.result.homeGoals : null,
+            result2: event.result ? event.result.awayGoals : null,
+        }))];
+
+        localStorage.setItem('events', JSON.stringify(events));
+        console.log("Events after merging: ", events);
+        
+    } catch (error) {
+        console.log("Failed to fetch data: ", error);
     }
-}
+};
 
 loadData();
 
-function saveEvent() {
+//NB: conditional rendering of elements only if they exist on page
+//------------------------addEvent page event listener-----------------------------
+let events = [];
+localStorage.setItem('events', JSON.stringify(events));
+// And to load them:
+events = JSON.parse(localStorage.getItem('events')) || [];
+
+let addEventForm = document.getElementById('add_event');
+if (addEventForm) {
+    addEventForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
     const event = {
         status: document.getElementById('status').value,
         date: document.getElementById('date').value,
@@ -30,23 +56,34 @@ function saveEvent() {
 
     const events = JSON.parse(localStorage.getItem('events')) || [];
     events.push(event);
-    
-    localStorage.setItem('events', JSON.stringify(events));
-    window.location.href = './index.html';
+    console.log("Event added: ", event);
 
-    // localStorage.setItem('eventData', JSON.stringify(event));
-    // window.location.href = './listEvent.html'
+    //Refreshing the event list and calendar after saving
+    loadEventsToList();
+    populateCalendar(parseInt(monthDropdown.value), parseInt(yearDropdown.value));
+});
+} 
+
+function getQueryParam(param){
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
 }
 
+//-----------------------------
 function loadEventsToList() {
     const listEvent = document.getElementById('eventList');
+   if (listEvent) {
     listEvent.innerHTML = ''; // Clear any existing list content
 
     // Retrieve events from localStorage
+    // const events = JSON.parse(localStorage.getItem('events')) || [];
+
+    const queryDate = getQueryParam('date');
     const events = JSON.parse(localStorage.getItem('events')) || [];
+    const eventsForDate = events.filter(event => event.date === queryDate);
 
     // Check if there are events to display
-    if (events.length === 0) {
+    if (eventsForDate.length === 0) {
         const emptyMessage = document.createElement('p');
         emptyMessage.textContent = 'No events available';
         emptyMessage.classList.add('text-gray-500');
@@ -55,9 +92,9 @@ function loadEventsToList() {
     }
 
     // Iterate over each event and display its details
-    events.forEach(event => {
+    eventsForDate.forEach(event => {
         const listItem = document.createElement('li');
-        listItem.classList.add('p-4', 'border-b', 'border-gray-300');
+        listItem.classList.add('p-4', 'border-b', 'border-gray-300', 'bg-gray-200');
 
         listItem.innerHTML = `
             <p><strong>Date:</strong> ${event.date}</p>
@@ -70,48 +107,16 @@ function loadEventsToList() {
         listEvent.appendChild(listItem);
     });
 }
-
+}
 // Call loadEventsToList when the page loads in listEvent.html
-// if (window.location.pathname.includes('listEvent.html')) {
-//     window.onload = loadEventsToList;
-// }
-
-
-// const eventData = JSON.parse(localStorage.getItem('eventData'));
-// if (eventData) {
-//     document.getElementById('statusDisplay').textContent = `Status: ${eventData.status}`;
-//     document.getElementById('dateDisplay').textContent = `Date: ${eventData.date}`;
-//     document.getElementById('timeDisplay').textContent = `Time: ${eventData.time}`;
-//     document.getElementById('teamsDisplay').textContent = `Teams: ${eventData.team1} vs ${eventData.team2}`;
-//     document.getElementById('leagueDisplay').textContent = `League: ${eventData.league}`;
-//     document.getElementById('resultDisplay').textContent = `Result: ${eventData.result1} : ${eventData.result2}`;
-// } else {
-
-// }
-
-//write function with param to get the date based on a month 1-12 -> gets you the number of days if statement for february based on the year,
-//second param is year based on month - year populate the table with the corresponding dates 
-//another function focusing on first/last date of the month and the weekday 1-7
-
-// function daysInMonth(month, year){
-//     return new Date(year, month + 1, 0).getDate(); //returns 0-indexed months 
-// }
-
-// function currentMonthDays() {
-// let date = new Date();
-// let month = date.getMonth();
-// let year = date.getFullYear();
-
-// console.log("Number of days in " + (month + 1) + " of year " + year +
-//     " is " + daysInMonth(month, year));
-// }
-
-// currentMonthDays()
+if (window.location.pathname.includes('listEvent.html')) {
+    window.onload = loadEventsToList;
+}
 
 let yearDropdown = document.getElementById('year_dropdown');
 let monthDropdown = document.getElementById('month_dropdown');
 
-
+//change, not a good practice to have anonymous function
 (() => {
 let yearStart = 1980;
 let yearCurrent = (new Date).getFullYear(); 
@@ -121,10 +126,12 @@ for(let i = yearCurrent; i >= yearStart; i--){
     let selected = (i === yearCurrent ? 'selected="selected"' : '')
     yearOption += `<option value="${i}" ${selected}>${i}</option>`;
 }
-
+if (yearDropdown){
 yearDropdown.innerHTML = yearOption;
+}
 })();
 
+//same here 
 (() => {
 let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 let monthCurrent = (new Date).getMonth(); 
@@ -137,7 +144,9 @@ for(let i = 0; i < months.length; i++){
     monthOption += `<option value="${monthValue}" ${selected}>${months[i]}</option>`
 }
 
-monthDropdown.innerHTML = monthOption;
+if(monthDropdown){
+    monthDropdown.innerHTML = monthOption;
+}
 })();
 
 function daysInAnyMonth(month, year){
@@ -178,9 +187,10 @@ switch(month) {
     // }
 
     function populateCalendar(month, year){
-        const dateDisplay = document.getElementById('date_display');
+    const dateDisplay = document.getElementById('date_display');
        const events = JSON.parse(localStorage.getItem('events')) || [];
        
+       if (dateDisplay) {
         dateDisplay.innerHTML = `
          <div class="text-center">Mon</div>
             <div>Tue</div>
@@ -211,6 +221,7 @@ switch(month) {
             const cell = document.createElement("div");
             cell.textContent = day;
             cell.classList.add("current-month");
+            cell.style.cursor = 'pointer';
 
             const eventDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
             const eventForDate = events.find(event => event.date === eventDate);
@@ -219,7 +230,12 @@ switch(month) {
                 eventInfo.classList.add("event-info");
                 eventInfo.textContent = `${eventForDate.team1} vs ${eventForDate.team2} - ${eventForDate.status}`;
                 cell.appendChild(eventInfo);
-            }     
+            }
+            
+            //event listener for clicking on cell
+            cell.addEventListener('click', () => {
+                window.location.href = `listEvent.html?date=${eventDate}`;
+            })
             
             dateDisplay.appendChild(cell);
         }
@@ -234,10 +250,13 @@ switch(month) {
             dateDisplay.appendChild(cell);
         }
     }
+    }
 
+    
+if (yearDropdown, monthDropdown){
     monthDropdown.addEventListener('change', () => populateCalendar(parseInt(monthDropdown.value), parseInt(yearDropdown.value)));
     yearDropdown.addEventListener('change', () => populateCalendar(parseInt(monthDropdown.value), parseInt(yearDropdown.value)));
-    
+}    
   
     window.onload = () => {
         const currentMonth = new Date().getMonth() + 1;
@@ -248,8 +267,11 @@ switch(month) {
             const yearDropdown = document.getElementById('year_dropdown');
             monthDropdown.value = currentMonth;
             yearDropdown.value = currentYear;
+            yearDropdown.value = currentYear;
               
-        populateCalendar(currentMonth, currentYear);
+            yearDropdown.value = currentYear;    
+              
+            populateCalendar(currentMonth, currentYear);
         } else if(window.location.pathname.includes('listEvent.html')) {
             loadEventsToList();
         }

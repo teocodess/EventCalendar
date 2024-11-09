@@ -10,11 +10,18 @@
     <!--body - bg svg img + gradient var for light/dark more-->
     
     <div class="grid grid-cols-1 grid-rows-5 h-3/4 w-[80%]"> <!--mapping out the project skeleton-->
-    <nav id="navigation" class="bg-slate-200 row-span-1 flex items-center gap-5">
-    <button>Calendar View</button>
-    <button>Add Event</button>
-    <div class="justify-end">darkmode</div>
-    </nav>
+        <nav id="navigation" class="bg-slate-200 row-span-1 flex items-center gap-5">
+            <button class="bg-slate-700" onclick="window.location.href='./index.html'">Calendar View
+                <div class="flex flex-row">
+                <a href="./index.html"><img class="w-8 h-8" src="./assets/calendar.svg"></a>
+                <a href="./listEvent.html"><img class="w-8 h-8" src="./assets/listing.svg"></a>
+            </div>
+            </button>
+            <button onclick="window.location.href='./addEvent.html'">Add Event
+                <a href="./addEvent.html"><img class="w-8 h-8" src="./assets/plus.svg"></a>
+            </button>
+            <div class="justify-end">darkmode</div>
+            </nav>
 
     <!--add symbol eventlistener direct to this page same nav bar listing symbol active-->
     <section id="calender_container" class="border-2 row-span-4 flex flex-col items-center gap-5">
