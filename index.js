@@ -33,85 +33,10 @@ loadData();
 
 //NB: conditional rendering of elements only if they exist on page
 //------------------------addEvent page event listener-----------------------------
-let events = [];
-localStorage.setItem('events', JSON.stringify(events));
-// And to load them:
-events = JSON.parse(localStorage.getItem('events')) || [];
-
-let addEventForm = document.getElementById('add_event');
-if (addEventForm) {
-    addEventForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const event = {
-        status: document.getElementById('status').value,
-        date: document.getElementById('date').value,
-        time: document.getElementById('time').value,
-        team1: document.getElementById('team1').value,
-        team2: document.getElementById('team2').value,
-        league: document.getElementById('league').value,
-        result1: document.getElementById('result1').value,
-        result2: document.getElementById('result2').value,
-    };
-
-    const events = JSON.parse(localStorage.getItem('events')) || [];
-    events.push(event);
-    console.log("Event added: ", event);
-
-    //Refreshing the event list and calendar after saving
-    loadEventsToList();
-    populateCalendar(parseInt(monthDropdown.value), parseInt(yearDropdown.value));
-});
-} 
-
-function getQueryParam(param){
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
-}
-
-//-----------------------------
-function loadEventsToList() {
-    const listEvent = document.getElementById('eventList');
-   if (listEvent) {
-    listEvent.innerHTML = ''; // Clear any existing list content
-
-    // Retrieve events from localStorage
-    // const events = JSON.parse(localStorage.getItem('events')) || [];
-
-    const queryDate = getQueryParam('date');
-    const events = JSON.parse(localStorage.getItem('events')) || [];
-    const eventsForDate = events.filter(event => event.date === queryDate);
-
-    // Check if there are events to display
-    if (eventsForDate.length === 0) {
-        const emptyMessage = document.createElement('p');
-        emptyMessage.textContent = 'No events available';
-        emptyMessage.classList.add('text-gray-500');
-        listEvent.appendChild(emptyMessage);
-        return;
-    }
-
-    // Iterate over each event and display its details
-    eventsForDate.forEach(event => {
-        const listItem = document.createElement('li');
-        listItem.classList.add('p-4', 'border-b', 'border-gray-300', 'bg-gray-200');
-
-        listItem.innerHTML = `
-            <p><strong>Date:</strong> ${event.date}</p>
-            <p><strong>Time:</strong> ${event.time}</p>
-            <p><strong>Status:</strong> ${event.status}</p>
-            <p><strong>Teams:</strong> ${event.team1} vs ${event.team2}</p>
-            <p><strong>League:</strong> ${event.league}</p>
-            <p><strong>Result:</strong> ${event.result1} : ${event.result2}</p>
-        `;
-        listEvent.appendChild(listItem);
-    });
-}
-}
-// Call loadEventsToList when the page loads in listEvent.html
-if (window.location.pathname.includes('listEvent.html')) {
-    window.onload = loadEventsToList;
-}
+// let events = [];
+// localStorage.setItem('events', JSON.stringify(events));
+// // And to load them:
+// events = JSON.parse(localStorage.getItem('events')) || [];
 
 let yearDropdown = document.getElementById('year_dropdown');
 let monthDropdown = document.getElementById('month_dropdown');

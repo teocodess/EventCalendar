@@ -1,0 +1,19 @@
+{
+  "name": "calendarapp",
+  "version": "1.0.0",
+  "description": "Calendar App created for the SportRadar coding challenge ",
+  "main": "scripts.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teocodess/EventCalendar.git"
+  },
+  "author": "Teodora Velikova",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/teocodess/EventCalendar/issues"
+  },
+  "homepage": "https://github.com/teocodess/EventCalendar#readme"
+}
