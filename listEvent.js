@@ -1,20 +1,68 @@
+let yearDropdown = document.getElementById('year_dropdown');
+let monthDropdown = document.getElementById('month_dropdown');
+
+//change, not a good practice to have anonymous function
+(() => {
+let yearStart = 1980;
+let yearCurrent = (new Date).getFullYear(); 
+let yearOption = '';
+
+for(let i = yearCurrent; i >= yearStart; i--){
+    let selected = (i === yearCurrent ? 'selected="selected"' : '')
+    yearOption += `<option value="${i}" ${selected}>${i}</option>`;
+}
+if (yearDropdown){
+yearDropdown.innerHTML = yearOption;
+}
+})();
+
+//same here 
+(() => {
+let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+let monthCurrent = (new Date).getMonth(); 
+let monthValue = '';
+let monthOption = `<option value=" ">Select Month</option>`; //first value
+
+for(let i = 0; i < months.length; i++){
+    monthValue = (i + 1);
+    let selected = (i === monthCurrent ? 'selected' : '');
+    monthOption += `<option value="${monthValue}" ${selected}>${months[i]}</option>`
+}
+
+if(monthDropdown){
+    monthDropdown.innerHTML = monthOption;
+}
+})();
+
 function getQueryParam(param){
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
 }
 
+
 //-----------------------------
-function loadEventsToList() {
+function loadEventsForMonth() {
     const listEvent = document.getElementById('eventList');
    if (listEvent) {
     listEvent.innerHTML = ''; // Clear any existing list content
 
-    // Retrieve events from localStorage
-    // const events = JSON.parse(localStorage.getItem('events')) || [];
+    const selectedMonth = parseInt(monthDropdown.value);
+    const selectedYear = parseInt(yearDropdown.value);
 
-    const queryDate = getQueryParam('date');
+    if(isNaN(selectedMonth) || isNaN(selectedYear)) {
+        return; //exits if the month of year are not properly selected
+    }
+
+    // const queryDate = getQueryParam('date');
+    // const events = JSON.parse(localStorage.getItem('events')) || [];
+    // const eventsForDate = events.filter(event => event.date === queryDate);
+
+
     const events = JSON.parse(localStorage.getItem('events')) || [];
-    const eventsForDate = events.filter(event => event.date === queryDate);
+    const eventsForDate = events.filter(event => {
+       const [year, month] = event.date.split('-').map(Number);
+       return year === selectedYear && month === selectedMonth;
+    });
 
     // Check if there are events to display
     if (eventsForDate.length === 0) {
@@ -28,7 +76,7 @@ function loadEventsToList() {
     // Iterate over each event and display its details
     eventsForDate.forEach(event => {
         const listItem = document.createElement('li');
-        listItem.classList.add('p-4', 'border-b', 'border-gray-300', 'bg-gray-200');
+        listItem.classList.add('p-4', 'border-b', 'border-gray-300', 'bg-gray-200'); //add the dot classes here as well
 
         listItem.innerHTML = `
             <p><strong>Date:</strong> ${event.date}</p>
@@ -42,7 +90,13 @@ function loadEventsToList() {
     });
 }
 }
+
+if(yearDropdown && monthDropdown) {
+    monthDropdown.addEventListener('change', loadEventsForMonth);
+    yearDropdown.addEventListener('change', loadEventsForMonth);
+}
+
 // Call loadEventsToList when the page loads in listEvent.html
 if (window.location.pathname.includes('listEvent.html')) {
-    window.onload = loadEventsToList;
+    window.onload = loadEventsForMonth;
 }

@@ -1,6 +1,12 @@
 //-----------------------loading JSON file and merging with localStorage--------------------------
 const loadData = async () => {
     try {
+        const existingDataFlag = localStorage.getItem('dataLoaded');
+        if(existingDataFlag){
+            console.log("Data already loaded.");
+            return; 
+        }
+
         const response = await fetch('./data/sportData.json.json');
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -22,8 +28,8 @@ const loadData = async () => {
         }))];
 
         localStorage.setItem('events', JSON.stringify(events));
+        localStorage.setItem('dataLoaded', 'true');
         console.log("Events after merging: ", events);
-        
     } catch (error) {
         console.log("Failed to fetch data: ", error);
     }
@@ -145,17 +151,35 @@ switch(month) {
         for (let day = 1; day <= daysInMonth; day++){
             const cell = document.createElement("div");
             cell.textContent = day;
-            cell.classList.add("current-month");
+            cell.classList.add("current-month", "w-10", "h-10", "relative"); //rewrite the classes!!!
             cell.style.cursor = 'pointer';
 
             const eventDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
             const eventForDate = events.find(event => event.date === eventDate);
             if (eventForDate) {
+
+                const statusDot = document.createElement("div");
+                statusDot.classList.add("inline-flex", "w-2", "h-2", "rounded-full");
+
+                if(eventForDate.status === 'played'){
+                    statusDot.classList.add("played","bg-red-500");
+                } else if(eventForDate.status === 'playing'){
+                    statusDot.classList.add("playing", "bg-black", "animate-pulse");
+                } else if(eventForDate.status === 'scheduled'){
+                    statusDot.classList.add("scheduled", "bg-green-500");
+                }
+
+              
+                cell.appendChild(statusDot);
+
                 const eventInfo = document.createElement("div");
                 eventInfo.classList.add("event-info");
                 eventInfo.textContent = `${eventForDate.team1} vs ${eventForDate.team2} - ${eventForDate.status}`;
+                eventInfo.appendChild(statusDot)
                 cell.appendChild(eventInfo);
             }
+
+            
             
             //event listener for clicking on cell
             cell.addEventListener('click', () => {
@@ -198,6 +222,6 @@ if (yearDropdown, monthDropdown){
               
             populateCalendar(currentMonth, currentYear);
         } else if(window.location.pathname.includes('listEvent.html')) {
-            loadEventsToList();
+            loadEventsForMonth();
         }
     }
