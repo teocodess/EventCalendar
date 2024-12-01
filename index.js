@@ -123,13 +123,14 @@ switch(month) {
        
        if (dateDisplay) {
         dateDisplay.innerHTML = `
-         <div class="text-center">Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>Fri</div>
-            <div>Sat</div>
-            <div>Sun</div>
+         <div class="text-center, font-semibold, text-xl">Mon</div>
+            <div class="text-center, font-semibold, text-xl">Tue</div>
+            <div class="text-center, font-semibold, text-xl">Wed</div>
+            <div class="text-center, font-semibold, text-xl">Thu</div>
+            <div class="text-center, font-semibold, text-xl">Fri</div>
+            <div class="text-center, font-semibold, text-xl">Sat</div>
+            <div class="text-center, font-semibold, text-xl">Sun</div>
+           
         `;
 
         //calculates first day and num of days in current month
@@ -142,7 +143,7 @@ switch(month) {
     
         for(let i = startingEmptyCells; i>0; i--){
             const cell = document.createElement("div");
-            cell.classList.add("text-gray-400");
+            cell.classList.add("flex", "items-center", "justify-center", "text-gray-400", "text-xl", "aspect-square", "border-2", "text-center");
             cell.textContent = prevMonthDays - i + 1;
             dateDisplay.appendChild(cell);
         }
@@ -151,7 +152,7 @@ switch(month) {
         for (let day = 1; day <= daysInMonth; day++){
             const cell = document.createElement("div");
             cell.textContent = day;
-            cell.classList.add("current-month", "w-10", "h-10", "relative"); //rewrite the classes!!!
+            cell.classList.add("current-month", "flex", "items-center", "justify-center", "text-xl", "hover:bg-white", "aspect-square", "border-2", "border-blue-300", "text-center"); 
             cell.style.cursor = 'pointer';
 
             const eventDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
@@ -159,14 +160,14 @@ switch(month) {
             if (eventForDate) {
 
                 const statusDot = document.createElement("div");
-                statusDot.classList.add("inline-flex", "w-2", "h-2", "rounded-full");
+                statusDot.classList.add('inline-flex', "w-2", "h-2", "rounded-full");
 
                 if(eventForDate.status === 'played'){
-                    statusDot.classList.add("played","bg-red-500");
+                    statusDot.classList.add("played","bg-slate-500");
                 } else if(eventForDate.status === 'playing'){
-                    statusDot.classList.add("playing", "bg-black", "animate-pulse");
+                    statusDot.classList.add("playing", "bg-red-700", "animate-pulse");
                 } else if(eventForDate.status === 'scheduled'){
-                    statusDot.classList.add("scheduled", "bg-green-500");
+                    statusDot.classList.add("scheduled", "bg-green-700");
                 }
 
               
@@ -174,7 +175,7 @@ switch(month) {
 
                 const eventInfo = document.createElement("div");
                 eventInfo.classList.add("event-info");
-                eventInfo.textContent = `${eventForDate.team1} vs ${eventForDate.team2} - ${eventForDate.status}`;
+                eventInfo.textContent = `${eventForDate.team1} vs ${eventForDate.team2}`; //- ${eventForDate.status} ON:hover
                 eventInfo.appendChild(statusDot)
                 cell.appendChild(eventInfo);
             }
@@ -194,7 +195,7 @@ switch(month) {
         const nextMonthDays = 7 - (totalCells % 7);
         for(let i = 1; i<= nextMonthDays && nextMonthDays <7; i++){
             const cell = document.createElement("div");
-            cell.classList.add("text-gray-400");
+            cell.classList.add("flex", "items-center", "justify-center", "text-xl", "text-gray-400", "aspect-square", "border-2", "text-center");
             cell.textContent = i;
             dateDisplay.appendChild(cell);
         }

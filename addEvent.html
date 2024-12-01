@@ -7,54 +7,75 @@
     <title>Add Event</title>
 </head>
 <body class="flex items-center bg-blue-300 justify-center h-screen w-full">
-    <!--body - bg svg img + gradient var for light/dark more-->
-    
-    <div class="grid grid-cols-1 grid-rows-5 h-3/4 w-[80%]"> <!--mapping out the project skeleton-->
-        <nav id="navigation" class="bg-slate-200 row-span-1 flex items-center gap-5">
-            <button class="bg-slate-700" onclick="window.location.href='./index.html'">Calendar View
-                <div class="flex flex-row">
+    <!-- Main Container -->
+    <div class="grid grid-rows-[auto, 1fr] gap-4 w-[90%] max-w-4xl bg-white rounded-lg shadow-lg p-4 mt-8 overflow-auto">
+        <!-- Navigation Bar -->
+        <nav id="navigation" class="flex items-center justify-between gap-5 p-2 bg-slate-200 rounded-md shadow-sm">
+            <button class="flex flex-col items-center text-black font-semibold px-3 py-1 rounded-lg" onclick="window.location.href='./index.html'">
                 <a href="./index.html"><img class="w-8 h-8" src="./assets/calendar.svg"></a>
+                Calendar View
+            </button>
+            <button class="flex flex-col items-center text-black font-semibold px-3 py-1 rounded-lg" onclick="window.location.href='./listEvent.html'">
                 <a href="./listEvent.html"><img class="w-8 h-8" src="./assets/listing.svg"></a>
-            </div>
+                List View
             </button>
-            <button onclick="window.location.href='./addEvent.html'">Add Event
+            <button class="flex flex-col items-center text-black font-semibold px-3 py-1 rounded-lg" onclick="window.location.href='./addEvent.html'">
                 <a href="./addEvent.html"><img class="w-8 h-8" src="./assets/plus.svg"></a>
+                Add Event
             </button>
-            <div class="justify-end">darkmode</div>
-            </nav>
-<!--check if i can have the ids across pages-->
-    <section id="event_container" class="bg-slate-300 row-span-4 flex flex-col justify-center items-center gap-5">
-        <form id="event_form" class="grid grid-cols-2 grid-rows-6 gap-5 w-3/4 h-full">
-            <div class="col-span-1 row-span-5 flex flex-col items-center justify-around bg-red-300 w-full">
-                <label>Status: </label>
-                <select id="status" class="w-3/4"> 
-                <option>scheduled</option>
-                <option>played</option>
-                <option>playing</option>
-            </select>
-           <label>Date: </label>
-           <input id="date" placeholder="Enter event date" class="w-3/4" type="date">
-           <label>Time: </label>
-           <input id="time" placeholder="Enter event time" class="w-3/4" type="datetime">
-        </div>
-           <div class="col-span-1 row-span-5 flex flex-col justify-around items-center bg-green-300 w-full">
-           <label>Teams: </label>
-           <input id="team1" placeholder="Enter team #1" class="w-3/4" type="text"> : 
-           <input id="team2" placeholder="Enter team#2" class="w-3/4" type="text">
-           <br><label>League: </label>
-           <input id="league" placeholder="Enter event league" class="w-3/4" type="text">
-           <label>Result: </label>
-           <input id="result1" placeholder="Enter event result" class="w-3/4" type="number"> : 
-           <input id="result2" placeholder="Enter event result" class="w-3/4" type="number">
-        </div>
-        <div class="col-span-2 row-span-1 flex flex-row items-center justify-center bg-red-300">
-        <button type="submit" id="add_event" >ADD EVENT</button>
-        </div>
-        </form>
+        </nav>
 
-          
-        
-    </section>
+            <form id="event_form" class="flex flex-col items-center justify-center gap-5 overflow-auto bg-slate-200 p-4 rounded-md shadow-sm">
+                
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                <div class="flex flex-col gap-4 bg-white p-4 rounded-md shadow-sm">
+                    <div class="flex flex-col gap-2">
+                        <label for="status" class="font-semibold text-gray-700">Status:</label>
+                        <select id="status" class="border rounded-md p-2">
+                            <option>scheduled</option>
+                            <option>played</option>
+                            <option>playing</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label for="date" class="font-semibold text-gray-700">Date:</label>
+                        <input id="date" type="date" class="border rounded-md p-2">
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label for="time" class="font-semibold text-gray-700">Time:</label>
+                        <input id="time" type="time" class="border rounded-md p-2">
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-4 bg-white p-4 rounded-md shadow-sm">
+                    <div class="flex flex-col gap-2">
+                        <label for="team1" class="font-semibold text-gray-700">Team 1:</label>
+                        <input id="team1" type="text" placeholder="Enter team #1" class="border rounded-md p-2">
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label for="team2" class="font-semibold text-gray-700">Team 2:</label>
+                        <input id="team2" type="text" placeholder="Enter team #2" class="border rounded-md p-2">
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label for="league" class="font-semibold text-gray-700">League:</label>
+                        <input id="league" type="text" placeholder="Enter event league" class="border rounded-md p-2">
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label for="result" class="font-semibold text-gray-700">Result:</label>
+                        <div class="flex gap-2">
+                            <input id="result1" type="number" placeholder="Team 1 score" class="border rounded-md p-2 w-full">
+                            <span class="font-semibold text-gray-700">:</span>
+                            <input id="result2" type="number" placeholder="Team 2 score" class="border rounded-md p-2 w-full">
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="w-full flex items-center justify-center">
+                    <button id="add_event" type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm">
+                        ADD EVENT
+                    </button>
+                </div>
+        </form>
     </div>
 
     <script src="./addEvent.js"></script>

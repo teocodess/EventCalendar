@@ -76,7 +76,8 @@ function loadEventsForMonth() {
     // Iterate over each event and display its details
     eventsForDate.forEach(event => {
         const listItem = document.createElement('li');
-        listItem.classList.add('p-4', 'border-b', 'border-gray-300', 'bg-gray-200'); //add the dot classes here as well
+        listItem.classList.add('p-4', 'border-b', 'border-gray-300', 'bg-gray-200', 'rounded-lg',
+                'flex', 'flex-col', 'gap-1', 'mt-4');
 
         listItem.innerHTML = `
             <p><strong>Date:</strong> ${event.date}</p>
